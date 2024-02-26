@@ -47,7 +47,7 @@ require_once "./init.php"
                         <input name="hotel-name" type="text" class="form-control" id="hotel-name" placeholder="Hotel name" value="<?= $name_filter ?>">
                     </div>
                     <div class="mb-3">
-                        <input name="parking-check" type="checkbox" class="form-check-input" id="parking-check" value="<?= $park_filter ?>">
+                        <input name="parking-check" type="checkbox" class="form-check-input" id="parking-check" <?= $park_filter ? 'checked' : '' ?>>
                         <label for="parking-check" class="form-check-label">Parking Available</label>
                     </div>
                     <div class="mb-3">
@@ -60,7 +60,7 @@ require_once "./init.php"
                     </div>
                     <div class="mb-3">
                         <button class="btn btn-primary">Filter</button>
-                        <button type="reset" class="btn btn-warning">Reset</button>
+                        <button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
                     </div>
                 </form>
 
@@ -88,18 +88,36 @@ require_once "./init.php"
         </div>
     </div>
     <script>
-        const voteLabelEl = document.querySelector("label[for='vote-range']");
+        const nameInputEl = document.querySelector("input#hotel-name");
+        const parkInputEl = document.querySelector("input#parking-check");
         const voteInputEl = document.querySelector("input#vote-range");
+        const distInputEl = document.querySelector("input#dist-range");
+        const voteLabelEl = document.querySelector("label[for='vote-range']");
+        const distLabelEl = document.querySelector("label[for='dist-range']");
+        const formEl = document.querySelector("form");
 
         voteInputEl.addEventListener("input", () => {
             voteLabelEl.innerText = `Min Vote: ${voteInputEl.value} star`
         });
 
-        const distLabelEl = document.querySelector("label[for='dist-range']");
-        const distInputEl = document.querySelector("input#dist-range");
 
         distInputEl.addEventListener("input", () => {
             distLabelEl.innerText = `Dist to center: <= ${parseFloat(distInputEl.value).toFixed(1)} KM`
+        });
+
+        const resetBtnEl = document.querySelector("#reset-btn");
+
+        resetBtnEl.addEventListener("click", () =>{
+            nameInputEl.value = '<?= $name_filter_init ?>';
+            parkInputEl.checked = <?= $park_filter_init ?>;
+            voteInputEl.value = <?= $vote_filter_init ?>;
+            distInputEl.value = <?= $dist_filter_init ?>;
+            voteLabelEl.innerText = "Min Vote: <?= $vote_filter_init ?> star";
+            distLabelEl.innerText = "Dist to center: <= <?= $dist_filter_init ?> KM";
+
+            formEl.submit();
+
+
         })
     </script>
 </body>

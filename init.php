@@ -44,11 +44,18 @@
 
     ];
 
-    $name_filter = $_GET["hotel-name"] ?? '';
-    $park_filter = $_GET["parking-check"] ?? false;
-    $vote_filter = $_GET["vote-range"] ?? 0;
-    $dist_filter = $_GET["dist-range"] ?? 50;
     
+    $name_filter_init = '';
+    $park_filter_init = 0;
+    $vote_filter_init = 0;
+    $dist_filter_init = 50;
+    
+    $name_filter = $_GET["hotel-name"] ?? $name_filter_init;
+    $park_filter = isset($_GET["parking-check"]) ? 1 : $park_filter_init;
+    $vote_filter = $_GET["vote-range"] ?? $vote_filter_init;
+    $dist_filter = $_GET["dist-range"] ?? $dist_filter_init;
+    var_dump($park_filter);
+
     $form_sent = !empty($_GET);
 
     if ($form_sent) {
