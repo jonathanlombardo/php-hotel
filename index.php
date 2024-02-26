@@ -9,6 +9,7 @@ require_once "./init.php"
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style type="text/css">
         
         header {
@@ -52,7 +53,7 @@ require_once "./init.php"
                         <input name="hotel-name" type="text" class="form-control" id="hotel-name" placeholder="Hotel name" value="<?= $name_filter ?>">
                     </div>
                     <div class="mb-3">
-                        <input name="parking-check" type="checkbox" class="form-check-input" id="parking-check" <?= $park_filter ? 'checked' : '' ?>>
+                        <input name="parking-check" type="checkbox" class="form-check-input" id="parking-check" value="park-true" <?= $park_filter ? 'checked' : '' ?>>
                         <label for="parking-check" class="form-check-label">Parking Available</label>
                     </div>
                     <div class="mb-3">
@@ -61,7 +62,7 @@ require_once "./init.php"
                     </div>
                     <div class="mb-3">
                         <label for="dist-range" class="form-label">Dist to center: <= <?= $dist_filter ?> KM</label>
-                        <input name="dist-range" type="range" class="form-range" min="2" max="50" step="0.5" id="dist-range" value="<?= $dist_filter ?>">
+                        <input name="dist-range" type="range" class="form-range" min="<?= $min_dist ?>" max="<?= $max_dist ?>" step="0.5" id="dist-range" value="<?= $dist_filter ?>">
                     </div>
                     <div class="mb-3">
                         <button class="btn btn-primary">Filter</button>
@@ -71,7 +72,7 @@ require_once "./init.php"
 
             </div>
             <div class="col-10 scroll">
-                <div class="row flex-wrap g-3">
+                <div class="row flex-wrap g-3 justify-content-center">
                     <?php if(empty($filtered_hotels)): ?>
                         <p class="text-center fst-italic fs-3">No results</p>
                     <?php else: ?>
@@ -83,8 +84,18 @@ require_once "./init.php"
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item active"><strong><?= $hotel['name'] ?></strong></li>
-                                    <li class="list-group-item"><strong>Parking: </strong><?= $hotel['parking'] ? 'Available' : 'Not Available' ?></li>
-                                    <li class="list-group-item"><strong>Vote: </strong><?= $hotel['vote'] ?></li>
+                                    <li class="list-group-item"><strong>Parking: </strong>
+                                        <i
+                                        <?= $hotel['parking'] ? 'class="fa-solid fa-circle-check text-primary"' : 'class="fa-solid fa-circle-xmark text-secondary"' ?>
+                                        ></i>
+                                    </li>
+                                    <li class="list-group-item"><strong>Vote: </strong>
+                                        <?php for($i=1 ; $i <= 5; $i++): ?>
+                                            <i
+                                            <?= $hotel['vote'] >= $i ? 'class="fa-solid fa-star text-primary"' : 'class="fa-regular fa-star text-secondary"' ?>
+                                            ></i>
+                                        <?php endfor; ?>
+                                    </li>
                                     <li class="list-group-item"><strong>Distance to center: </strong><?= $hotel['distance_to_center'] ?> KM</li>
                                     <li class="list-group-item"><strong>Description: </strong><?= $hotel['description'] ?></li>
                                 </ul>
@@ -111,7 +122,7 @@ require_once "./init.php"
             voteLabelEl.innerText = `Min Vote: ${voteInputEl.value} star`
         });
 
-
+        distLabelEl.innerText = `Dist to center: <= ${parseFloat(distInputEl.value).toFixed(1)} KM`
         distInputEl.addEventListener("input", () => {
             distLabelEl.innerText = `Dist to center: <= ${parseFloat(distInputEl.value).toFixed(1)} KM`
         });
@@ -120,7 +131,7 @@ require_once "./init.php"
 
         resetBtnEl.addEventListener("click", () =>{
             nameInputEl.value = '<?= $name_filter_init ?>';
-            parkInputEl.checked = <?= $park_filter_init ?>;
+            parkInputEl.checked = <?= $park_filter_init ? "true" : "false" ?>;
             voteInputEl.value = <?= $vote_filter_init ?>;
             distInputEl.value = <?= $dist_filter_init ?>;
             voteLabelEl.innerText = "Min Vote: <?= $vote_filter_init ?> star";
