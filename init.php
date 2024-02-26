@@ -54,7 +54,6 @@
     $park_filter = isset($_GET["parking-check"]) ? 1 : $park_filter_init;
     $vote_filter = $_GET["vote-range"] ?? $vote_filter_init;
     $dist_filter = $_GET["dist-range"] ?? $dist_filter_init;
-    var_dump($park_filter);
 
     $form_sent = !empty($_GET);
 
@@ -65,7 +64,7 @@
         foreach ($hotels as $hotel) {
             
             if(
-                str_contains($hotel["name"], $name_filter) &&
+                str_contains(strtolower($hotel["name"]), strtolower(trim($name_filter))) &&
                 ($park_filter ? $hotel["parking"] : true) &&
                 $hotel["vote"] >= $vote_filter &&
                 $hotel["distance_to_center"] <= $dist_filter

@@ -33,7 +33,12 @@ require_once "./init.php"
 
     <header>
         <div class="container">
-            <h1 class="text-center">Here your hotels</h1>
+            <div class="row justify-content-end">
+                <div class="col-10">
+
+                    <h1 class="text-center">Here your hotels</h1>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -67,6 +72,10 @@ require_once "./init.php"
             </div>
             <div class="col-10 scroll">
                 <div class="row flex-wrap g-3">
+                    <?php if(empty($filtered_hotels)): ?>
+                        <p class="text-center fst-italic fs-3">No results</p>
+                    <?php else: ?>
+
                     <?php foreach($filtered_hotels as $hotel): ?>
                         <div class="col-4">
                         <div class="card h-100">
@@ -83,6 +92,8 @@ require_once "./init.php"
                             </div>
                         </div>
                     <?php endforeach; ?>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
