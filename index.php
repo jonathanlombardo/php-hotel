@@ -138,9 +138,16 @@ require_once "./init.php"
             distLabelEl.innerText = "Dist to center: <= <?= $dist_filter_init ?> KM";
 
             formEl.submit();
+        });
 
+        const inputs = document.querySelectorAll("intput");
 
+        inputs.forEach((input) => {
+            input.addEventListener("keyup", (event) =>{
+                if(event.target == "enter") {formEl.submit()}
+            })
         })
+
     </script>
 </body>
 </html>
