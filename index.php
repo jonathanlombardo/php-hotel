@@ -45,7 +45,7 @@ require_once "./init.php"
 
     <div class="container">
         <div class="row">
-            <div class="col-2 scroll">
+            <div class="col-4 col-xxl-2 scroll">
                 <h4 class="mb-4">Filter</h4>
                 <form method="GET">
                     <div class="mb-3">
@@ -62,7 +62,7 @@ require_once "./init.php"
                     </div>
                     <div class="mb-3">
                         <label for="dist-range" class="form-label">Dist to center: <= <?= $dist_filter ?> KM</label>
-                        <input name="dist-range" type="range" class="form-range" min="<?= $min_dist ?>" max="<?= $max_dist ?>" step="0.5" id="dist-range" value="<?= $dist_filter ?>">
+                        <input name="dist-range" type="range" class="form-range" min="<?= $min_dist ?>" max="<?= $max_dist ?>" step="0.1" id="dist-range" value="<?= $dist_filter ?>">
                     </div>
                     <div class="mb-3">
                         <button class="btn btn-primary">Filter</button>
@@ -71,14 +71,14 @@ require_once "./init.php"
                 </form>
 
             </div>
-            <div class="col-10 scroll">
+            <div class="col-8 col-xxl-10 scroll">
                 <div class="row flex-wrap g-3 justify-content-center">
                     <?php if(empty($filtered_hotels)): ?>
                         <p class="text-center fst-italic fs-3">No results</p>
                     <?php else: ?>
 
                     <?php foreach($filtered_hotels as $hotel): ?>
-                        <div class="col-4">
+                        <div class="col-12 col-lg-6 col-xxl-4">
                         <div class="card h-100">
                             <img src="./assets/img/<?= $hotel['img'] ?>" class="card-img-top" alt="<?= "{$hotel['name']} image" ?>">
                             <div class="card-body">

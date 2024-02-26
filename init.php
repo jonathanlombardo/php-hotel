@@ -23,7 +23,7 @@
             'description' => 'Hotel Rivamare Descrizione',
             'parking' => false,
             'vote' => 1,
-            'distance_to_center' => 1
+            'distance_to_center' => 1.3
         ],
         [
             'img' => '04.jpg',
@@ -39,7 +39,7 @@
             'description' => 'Hotel Milano Descrizione',
             'parking' => true,
             'vote' => 2,
-            'distance_to_center' => 50
+            'distance_to_center' => 50.5
         ],
 
     ];
@@ -52,7 +52,7 @@
     }
 
     $max_dist = number_format($max_dist, 1);
-    var_dump($max_dist);
+    // var_dump($max_dist);
 
     $min_dist = $max_dist;
 
@@ -62,7 +62,7 @@
     }
 
     $min_dist = number_format($min_dist, 1);
-    var_dump($min_dist);
+    // var_dump($min_dist);
 
     $name_filter_init = '';
     $park_filter_init = false;
